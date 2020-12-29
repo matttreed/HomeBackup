@@ -9,9 +9,11 @@ import UIKit
 
 class TitleScreenViewController: UIViewController {
 
+    @IBOutlet weak var nextButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        nextButton.layer.cornerRadius = 10
     }
     
     @IBAction func nextButtonPressed(_ sender: Any) {

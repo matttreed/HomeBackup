@@ -10,9 +10,29 @@ import CoreData
 
 class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var headTableCell: UIView!
+    
     @IBOutlet weak var ideasTable: UITableView!
     
     @IBOutlet weak var NewIdeaContainer: UIStackView!
+    
+    @IBOutlet weak var addNewIdeaContainer: UIView!
+    
+    @IBOutlet weak var ideaContainer: UIView!
+    
+    @IBOutlet weak var addExplanationContainer: UIView!
+    
+    @IBOutlet weak var explanationContainer: UIView!
+    
+    @IBOutlet weak var playlistContainer: UIView!
+    
+    @IBOutlet weak var addCancelContainer: UIStackView!
+    
+    @IBOutlet weak var ideaTextView: UITextView!
+    
+    @IBOutlet weak var explanationTextView: UITextView!
+    
+    
     // RAM storage for list of ideas
     var ideasArray = [Idea]()
     
@@ -39,26 +59,101 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
             defaults.set(0, forKey: K.UserDefaults.numberOfIdeas)
         }
         
+        resetAddNewIdea()
+        
+        NewIdeaContainer.layer.borderWidth = 1
+        NewIdeaContainer.layer.borderColor = UIColor.systemGray2.cgColor
+        
         loadData()
+        
+        headTableCell.frame.size.height = 100
+        
+        ideasTable.estimatedRowHeight = 100
+        ideasTable.rowHeight = UITableView.automaticDimension
     }
+    
+    
+    @IBAction func addNewIdeaPressed(_ sender: UIButton) {
+        addNewIdeaContainer.isHidden = true
+        addNewIdeaContainer.isHidden = true
+        ideaContainer.isHidden = false
+        addExplanationContainer.isHidden = false
+        playlistContainer.isHidden = false
+        addCancelContainer.isHidden = false
+        
+        self.headTableCell.frame.size.height = 200
+        
+        ideasTable.reloadData()
+        
+    }
+    
+
+    @IBAction func addExplanationPressed(_ sender: UIButton) {
+        addExplanationContainer.isHidden = true
+        explanationContainer.isHidden = false
+    }
+    
+    
+    
+    
+    @IBAction func addButtonPressed(_ sender: UIButton) {
+        // initialize new idea
+        let newIdea = Idea(context: self.context)
+        newIdea.idea = ideaTextView.text
+        newIdea.explanation = explanationTextView.text;
+        if newIdea.idea == "" {
+            newIdea.idea = nil
+        }
+        newIdea.id = Int64(defaults.integer(forKey: K.UserDefaults.numberOfIdeas) + 1)
+        
+        // increase numIdeas
+        defaults.set(newIdea.id, forKey: K.UserDefaults.numberOfIdeas)
+        self.ideasArray.insert(newIdea, at: 0)
+        saveData()
+        ideasTable.reloadData()
+        resetAddNewIdea()
+    }
+    
+    
+    @IBAction func cancelButtonPressed(_ sender: UIButton) {
+        resetAddNewIdea()
+    }
+    
+    func resetAddNewIdea() {
+        addNewIdeaContainer.isHidden = false
+        ideaContainer.isHidden = true
+        addExplanationContainer.isHidden = true
+        explanationContainer.isHidden = true
+        playlistContainer.isHidden = true
+        addCancelContainer.isHidden = true
+        
+        ideaTextView.text = ""
+        explanationTextView.text = ""
+        
+        headTableCell.frame.size.height = 100
+        
+        ideasTable.reloadData()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     // MARK: - Table view data source
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        }
         return ideasArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            return tableView.dequeueReusableCell(withIdentifier: K.protoypes.createIdea, for: indexPath)
-        }
         let cell = tableView.dequeueReusableCell(withIdentifier: K.protoypes.idea, for: indexPath)
         
         cell.textLabel?.text = ideasArray[indexPath.row].idea
@@ -73,23 +168,7 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //MARK: - Handle Add New Idea
-    
-    @IBAction func createNewIdeaPressed(_ sender: Any) {
-        selectedIndex = 0
-        isNewIdea = true
-        
-        // initialize new idea
-        let newIdea = Idea(context: self.context)
-        newIdea.idea = ""
-        newIdea.explanation = nil;
-        newIdea.id = Int64(defaults.integer(forKey: K.UserDefaults.numberOfIdeas) + 1)
-        
-        // increase numIdeas
-        defaults.set(newIdea.id, forKey: K.UserDefaults.numberOfIdeas)
-        self.ideasArray.insert(newIdea, at: 0)
-        performSegue(withIdentifier: K.segues.editIdea, sender: self)
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         // presents ideas fullscreen, without gap at top
