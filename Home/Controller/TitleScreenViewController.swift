@@ -19,12 +19,5 @@ class TitleScreenViewController: UIViewController {
         performSegue(withIdentifier: K.segues.titleToIdeas, sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        // presents next viewcontroller fullscreen, without gap at top
-        let destination = segue.destination
-        destination.modalPresentationStyle = .fullScreen
-    }
-    
 }
 

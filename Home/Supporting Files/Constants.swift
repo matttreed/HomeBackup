@@ -10,6 +10,7 @@ import Foundation
 struct K {
     struct protoypes {
         static let idea = "ideaPrototype"
+        static let createIdea = "createIdeaPrototype"
     }
     struct segues {
         static let titleToIdeas = "titleToIdeasSegue"

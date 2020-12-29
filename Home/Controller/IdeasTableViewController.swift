@@ -11,8 +11,8 @@ import CoreData
 class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var ideasTable: UITableView!
-    @IBOutlet weak var createNewIdeaButton: UIButton!
     
+    @IBOutlet weak var NewIdeaContainer: UIStackView!
     // RAM storage for list of ideas
     var ideasArray = [Idea]()
     
@@ -31,7 +31,7 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         ideasTable.delegate = self
         ideasTable.dataSource = self
         
-        createNewIdeaButton.layer.cornerRadius = 10
+         NewIdeaContainer.layer.cornerRadius = 10
         
         
         if (defaults.integer(forKey: K.UserDefaults.numberOfIdeas) == 0) {
@@ -43,12 +43,22 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     // MARK: - Table view data source
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
         return ideasArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            return tableView.dequeueReusableCell(withIdentifier: K.protoypes.createIdea, for: indexPath)
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: K.protoypes.idea, for: indexPath)
         
         cell.textLabel?.text = ideasArray[indexPath.row].idea
@@ -84,7 +94,6 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         // presents ideas fullscreen, without gap at top
         let destination = segue.destination as! EditIdeaViewController
-        destination.modalPresentationStyle = .fullScreen
         destination.parentVC = self
         
     }
