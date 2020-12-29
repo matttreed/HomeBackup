@@ -132,10 +132,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1EI-ob-Rfx">
-                                <rect key="frame" x="50" y="100" width="314" height="222"/>
+                                <rect key="frame" x="50" y="100" width="314" height="343"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="axl-Da-GP8">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="222"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="343"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMV-CJ-Tvt">
                                                 <rect key="frame" x="0.0" y="0.0" width="314" height="120"/>
@@ -168,9 +168,34 @@
                                                 <state key="normal" title="  Add an Explanation...">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="addExplanationButtonPressed:" destination="8lP-r5-UWT" eventType="touchUpInside" id="VJ0-9K-rT8"/>
+                                                </connections>
                                             </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QmX-xM-VcF">
+                                                <rect key="frame" x="0.0" y="172" width="314" height="120"/>
+                                                <subviews>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uP-jN-xS7">
+                                                        <rect key="frame" x="10" y="10" width="294" height="100"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="100" id="Fwi-qR-Czc"/>
+                                                        </constraints>
+                                                        <color key="textColor" systemColor="labelColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="1uP-jN-xS7" secondAttribute="trailing" constant="10" id="4jZ-aa-x8B"/>
+                                                    <constraint firstItem="1uP-jN-xS7" firstAttribute="top" secondItem="QmX-xM-VcF" secondAttribute="top" constant="10" id="87o-56-gO6"/>
+                                                    <constraint firstItem="1uP-jN-xS7" firstAttribute="leading" secondItem="QmX-xM-VcF" secondAttribute="leading" constant="10" id="hQv-1c-uvt"/>
+                                                    <constraint firstAttribute="bottom" secondItem="1uP-jN-xS7" secondAttribute="bottom" constant="10" id="nas-E9-ULn"/>
+                                                </constraints>
+                                            </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="lOr-oH-Kd8">
-                                                <rect key="frame" x="0.0" y="172" width="314" height="50"/>
+                                                <rect key="frame" x="0.0" y="293" width="314" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f5W-Wi-2uv">
                                                         <rect key="frame" x="0.0" y="0.0" width="157" height="50"/>
@@ -237,6 +262,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addExplanationButton" destination="qbt-Tb-8Vs" id="Hlw-Yb-Ufc"/>
+                        <outlet property="explanationTextView" destination="1uP-jN-xS7" id="I9S-O1-nPM"/>
+                        <outlet property="explanationTextViewContainer" destination="QmX-xM-VcF" id="E1G-iQ-fd9"/>
                         <outlet property="groupTextView" destination="1EI-ob-Rfx" id="rsG-nU-56c"/>
                         <outlet property="ideaTextView" destination="ThF-he-oL0" id="5QL-23-nMa"/>
                         <outlet property="stackView" destination="axl-Da-GP8" id="SDP-I4-yyp"/>
