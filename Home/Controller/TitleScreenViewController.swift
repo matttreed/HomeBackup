@@ -21,7 +21,7 @@ class TitleScreenViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // presents editIdea fullscreen, without gap at top
+        // presents next viewcontroller fullscreen, without gap at top
         let destination = segue.destination
         destination.modalPresentationStyle = .fullScreen
     }

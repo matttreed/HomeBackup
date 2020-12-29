@@ -13,13 +13,16 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var ideasTable: UITableView!
     @IBOutlet weak var createNewIdeaButton: UIButton!
     
+    // RAM storage for list of ideas
     var ideasArray = [Idea]()
     
+    // variables that describe which idea is selected
     var selectedIndex = 0
     var isNewIdea = true
     
     let defaults = UserDefaults.standard
     
+    // context for Core Data
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
@@ -30,8 +33,9 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         createNewIdeaButton.layer.cornerRadius = 10
         
+        
         if (defaults.integer(forKey: K.UserDefaults.numberOfIdeas) == 0) {
-            // runs only on first run of app
+            // initializes number of ideas created at zero
             defaults.set(0, forKey: K.UserDefaults.numberOfIdeas)
         }
         
@@ -58,14 +62,19 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         performSegue(withIdentifier: K.segues.editIdea, sender: self)
     }
     
+    //MARK: - Handle Add New Idea
     
     @IBAction func createNewIdeaPressed(_ sender: Any) {
         selectedIndex = 0
         isNewIdea = true
+        
+        // initialize new idea
         let newIdea = Idea(context: self.context)
         newIdea.idea = ""
         newIdea.explanation = nil;
         newIdea.id = Int64(defaults.integer(forKey: K.UserDefaults.numberOfIdeas) + 1)
+        
+        // increase numIdeas
         defaults.set(newIdea.id, forKey: K.UserDefaults.numberOfIdeas)
         self.ideasArray.insert(newIdea, at: 0)
         performSegue(withIdentifier: K.segues.editIdea, sender: self)
@@ -80,8 +89,10 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
     }
     
+    //MARK: - Handle Core Data
+    
     func saveData() {
-        
+        // "commit" context to database
         do {
             try context.save()
         } catch {
@@ -90,6 +101,7 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func loadData() {
+        // pull data from database and sort according to id
         let request: NSFetchRequest<Idea> = Idea.fetchRequest()
         do {
             let unsortedArray = try context.fetch(request)
