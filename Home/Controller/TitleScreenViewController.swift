@@ -13,7 +13,18 @@ class TitleScreenViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
+    
+    @IBAction func nextButtonPressed(_ sender: Any) {
+        // next button goes to ideas screen
+        performSegue(withIdentifier: K.segues.titleToIdeas, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // presents editIdea fullscreen, without gap at top
+        let destination = segue.destination
+        destination.modalPresentationStyle = .fullScreen
+    }
+    
 }
 
