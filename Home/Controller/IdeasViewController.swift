@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -34,21 +34,16 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var addExplanationButton: UIButton!
     
-    
+    let realmInterface = RealmInterface()
     
     // RAM storage for list of ideas
-    var ideasArray = [Idea]()
+    var ideasArray: Results<Idea>?
     
     // variables that describe which idea is selected
     var selectedIndex = 0
     var isNewIdea = true
     
     let defaults = UserDefaults.standard
-    
-    var selectedPlaylist: String? = nil
-    
-    // context for Core Data
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +64,7 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NewIdeaContainer.layer.borderWidth = 1
         NewIdeaContainer.layer.borderColor = UIColor.systemGray2.cgColor
         
-        loadData()
+        ideasArray = realmInterface.loadIdeas()
         
         headTableCell.frame.size.height = 70
         
@@ -109,20 +104,17 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
         // initialize new idea
-        let newIdea = Idea(context: self.context)
+        let newIdea = Idea()
+        newIdea.id = defaults.integer(forKey: K.UserDefaults.numberOfIdeas) + 1
         newIdea.idea = ideaTextView.text
         newIdea.explanation = explanationTextView.text;
-        if newIdea.idea == "" {
-            newIdea.idea = nil
+        if newIdea.explanation == "" {
+            newIdea.explanation = nil
         }
-        newIdea.id = Int64(defaults.integer(forKey: K.UserDefaults.numberOfIdeas) + 1)
-        
-        newIdea.playlist = selectedPlaylist
         
         // increase numIdeas
         defaults.set(newIdea.id, forKey: K.UserDefaults.numberOfIdeas)
-        self.ideasArray.insert(newIdea, at: 0)
-        saveData()
+        realmInterface.saveNew(idea: newIdea)
         ideasTable.reloadData()
         resetAddNewIdea()
     }
@@ -163,13 +155,13 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - Table view data source
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ideasArray.count
+        return ideasArray?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.protoypes.idea, for: indexPath)
         
-        cell.textLabel?.text = ideasArray[indexPath.row].idea
+        cell.textLabel?.text = ideasArray?[indexPath.row].idea ?? "No Ideas Yet"
         return cell
     }
     
@@ -189,7 +181,7 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         } else if (segue.identifier == K.segues.pickPlaylist) {
             let destination = segue.destination as! PlaylistPickerViewController
             destination.parentVC = self
-            destination.passedPlaylist = ideasArray[selectedIndex].playlist
+            // destination.passedPlaylist = ideasArray[selectedIndex].playlist
         }
         // presents ideas fullscreen, without gap at top
         
@@ -197,28 +189,20 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     //MARK: - Handle Core Data
     
-    func saveData() {
-        // "commit" context to database
-        do {
-            try context.save()
-        } catch {
-            print("Error Saving Context \(error)")
-        }
-    }
-    
-    func loadData() {
-        // pull data from database and sort according to id
-        let request: NSFetchRequest<Idea> = Idea.fetchRequest()
-        do {
-            let unsortedArray = try context.fetch(request)
-            // sorts notes in chronological order
-            ideasArray = unsortedArray.sorted(by: { (a, b) -> Bool in
-                return a.id > b.id
-            })
-        } catch {
-            print("Error loading \(error)")
-        }
-    }
+//    func save(idea: Idea) {
+//        // "commit" context to database
+//        do {
+//            try realm.write {
+//                realm.add(idea)
+//            }
+//        } catch {
+//            print("Error Saving Context \(error)")
+//        }
+//    }
+//
+//    func loadData() {
+//        ideasArray = realm.objects(Idea.self)
+//    }
     
     
     

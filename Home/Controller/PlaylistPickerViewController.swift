@@ -6,108 +6,69 @@
 //
 
 import UIKit
-import CoreData
-
+import RealmSwift
 
 class PlaylistPickerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var playlistPickerTable: UITableView!
     
+    let realm = try! Realm()
     
-    
-    
+    let realmInterface = RealmInterface()
     
     var parentVC: IdeasViewController? = nil
     
-    var context: NSManagedObjectContext? = nil
+    var playlistArray: Results<Playlist>?
     
-    var playlistArray = [Playlist]()
-    
-    var passedPlaylist: String? = nil
-    
-    var selectedPlaylist: Int? = nil
+    var idea: Idea?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        context = parentVC?.context
         playlistPickerTable.layer.cornerRadius = 10
         
         playlistPickerTable.dataSource = self
         playlistPickerTable.delegate = self
         
-        addNewPlaylist(title: Date().description)
-        loadData()
-    }
-    
-    func addNewPlaylist(title: String) {
-        let playlist = Playlist(context: context!)
-        playlist.title = title
-        saveData()
+        let playlist = Playlist()
+        playlist.name = Date().description
+        realmInterface.saveNew(playlist: playlist)
+        
+        playlistArray = realmInterface.loadPlaylists()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return playlistArray.count
+        return playlistArray?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: K.protoypes.playlist, for: indexPath)
         
-        if indexPath.row == selectedPlaylist {
+        if playlistArray?[indexPath.row] == idea?.playlist {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
         }
         
-        cell.textLabel?.text = playlistArray[indexPath.row].title
+        cell.textLabel?.text = playlistArray?[indexPath.row].name ?? "No Playlists Yet"
         return cell
     }
 
     @IBAction func doneButtonPressed(_ sender: UIButton) {
-        if selectedPlaylist != nil {
-            parentVC?.selectedPlaylist = playlistArray[selectedPlaylist!].title
-        } else {
-            parentVC?.selectedPlaylist = nil
-        }
-        
+        /// update data
         self.dismiss(animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if selectedPlaylist == indexPath.row {
-            selectedPlaylist = nil
+        if idea?.playlist == playlistArray?[indexPath.row] {
+            idea?.playlist = nil
         } else {
-            selectedPlaylist = indexPath.row
+            idea?.playlist = playlistArray?[indexPath.row]
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        if let index = selectedPlaylist {
-            parentVC?.ideasArray[parentVC!.selectedIndex].playlist = playlistArray[index].title
-        } else {
-            parentVC?.ideasArray[parentVC!.selectedIndex].playlist = nil
-        }
         
         playlistPickerTable.reloadData()
-    }
-    
-    
-    func saveData() {
-        // "commit" context to database
-        do {
-            try context?.save()
-        } catch {
-            print("Error Saving Context \(error)")
-        }
-    }
-    
-    func loadData() {
-        // pull data from database and sort according to id
-        let request: NSFetchRequest<Playlist> = Playlist.fetchRequest()
-        do {
-            playlistArray = try context!.fetch(request)
-        } catch {
-            print("Error loading \(error)")
-        }
     }
 
     /*

@@ -16,6 +16,8 @@ class EditIdeaViewController: UIViewController {
     @IBOutlet weak var addExplanationButton: UIButton!
     @IBOutlet weak var explanationTextViewContainer: UIView!
     
+    let realmInterface = RealmInterface()
+    
     
     // parentViewController used to access and manipulate data from IdeasTableViewController
     // this view controller acts as a child, doesn't store any data itself
@@ -25,7 +27,7 @@ class EditIdeaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        idea = parentVC?.ideasArray[parentVC!.selectedIndex]
+        idea = parentVC?.ideasArray?[parentVC!.selectedIndex]
         ideaTextView.text = idea!.idea
         
         // either shows "add an explanation" button, or the explanation, never both
@@ -54,21 +56,20 @@ class EditIdeaViewController: UIViewController {
             idea!.explanation = explanationTextView.text
         }
         parentVC?.ideasTable.reloadData()
-        parentVC?.saveData()
         self.dismiss(animated: true, completion: nil)
     }
 
     
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
         if parentVC!.isNewIdea {
-            deleteIdea()
+            //deleteIdea()
         }
         self.dismiss(animated: true, completion: nil)
     }
     
 
     @IBAction func deleteButtonPressed(_ sender: UIButton) {
-        deleteIdea()
+        //deleteIdea()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -77,15 +78,15 @@ class EditIdeaViewController: UIViewController {
         addExplanationButton.isHidden = true
     }
     
-    func deleteIdea() {
-        let ideaToRemove = parentVC!.ideasArray[parentVC!.selectedIndex]
-        
-        // remove from RAM
-        parentVC?.ideasArray.remove(at: parentVC!.selectedIndex)
-        parentVC?.ideasTable.reloadData()
-        
-        //remove from database
-        parentVC?.context.delete(ideaToRemove)
-        parentVC?.saveData()
-    }
+//    func deleteIdea() {
+//        let ideaToRemove = parentVC!.ideasArray[parentVC!.selectedIndex]
+//
+//        // remove from RAM
+//        parentVC?.ideasArray.remove(at: parentVC!.selectedIndex)
+//        parentVC?.ideasTable.reloadData()
+//
+//        //remove from database
+//        parentVC?.context.delete(ideaToRemove)
+//        parentVC?.saveData()
+//    }
 }
