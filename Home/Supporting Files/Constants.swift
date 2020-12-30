@@ -11,10 +11,12 @@ struct K {
     struct protoypes {
         static let idea = "ideaPrototype"
         static let createIdea = "createIdeaPrototype"
+        static let playlist = "playlistCellPrototype"
     }
     struct segues {
         static let titleToIdeas = "titleToIdeasSegue"
         static let editIdea = "editIdeaSegue"
+        static let pickPlaylist = "pickPlaylistSegue"
     }
     struct UserDefaults {
         static let numberOfIdeas = "numberOfIdeas"

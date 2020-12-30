@@ -32,6 +32,9 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var explanationTextView: UITextView!
     
+    @IBOutlet weak var addExplanationButton: UIButton!
+    
+    
     
     // RAM storage for list of ideas
     var ideasArray = [Idea]()
@@ -41,6 +44,8 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var isNewIdea = true
     
     let defaults = UserDefaults.standard
+    
+    var selectedPlaylist: String? = nil
     
     // context for Core Data
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -66,7 +71,7 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         loadData()
         
-        headTableCell.frame.size.height = 100
+        headTableCell.frame.size.height = 70
         
         ideasTable.estimatedRowHeight = 100
         ideasTable.rowHeight = UITableView.automaticDimension
@@ -81,7 +86,7 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         playlistContainer.isHidden = false
         addCancelContainer.isHidden = false
         
-        self.headTableCell.frame.size.height = 200
+        self.headTableCell.frame.size.height = 225
         
         ideasTable.reloadData()
         
@@ -89,12 +94,18 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
 
     @IBAction func addExplanationPressed(_ sender: UIButton) {
-        addExplanationContainer.isHidden = true
+        //addExplanationContainer.isHidden = true
         explanationContainer.isHidden = false
+        
+        addExplanationButton.titleLabel?.text = ""
+        
+        self.headTableCell.frame.size.height = 275
+        //ideasTable.reloadData()
     }
     
-    
-    
+    @IBAction func addToPlaylistPressed(_ sender: Any) {
+        performSegue(withIdentifier: K.segues.pickPlaylist, sender: self)
+    }
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
         // initialize new idea
@@ -105,6 +116,8 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
             newIdea.idea = nil
         }
         newIdea.id = Int64(defaults.integer(forKey: K.UserDefaults.numberOfIdeas) + 1)
+        
+        newIdea.playlist = selectedPlaylist
         
         // increase numIdeas
         defaults.set(newIdea.id, forKey: K.UserDefaults.numberOfIdeas)
@@ -161,7 +174,6 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
         isNewIdea = false
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: K.segues.editIdea, sender: self)
@@ -171,9 +183,15 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        if (segue.identifier == K.segues.editIdea) {
+            let destination = segue.destination as! EditIdeaViewController
+            destination.parentVC = self
+        } else if (segue.identifier == K.segues.pickPlaylist) {
+            let destination = segue.destination as! PlaylistPickerViewController
+            destination.parentVC = self
+            destination.passedPlaylist = ideasArray[selectedIndex].playlist
+        }
         // presents ideas fullscreen, without gap at top
-        let destination = segue.destination as! EditIdeaViewController
-        destination.parentVC = self
         
     }
     
@@ -272,16 +290,6 @@ class IdeasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
     */
 

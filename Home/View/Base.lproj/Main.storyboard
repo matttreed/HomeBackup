@@ -91,17 +91,17 @@
                                 <rect key="frame" x="0.0" y="144" width="414" height="718"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="KD1-M0-N2x" userLabel="HeadTableCell">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="308"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="328"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7Ir-BC-175">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="308"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="328"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCI-bB-Dek">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="258"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="278"/>
                                                     <subviews>
                                                         <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="72Z-qd-4vf">
-                                                            <rect key="frame" x="15" y="15" width="384" height="228"/>
+                                                            <rect key="frame" x="15" y="15" width="384" height="248"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fej-RG-zCc" userLabel="AddNewContainer">
                                                                     <rect key="frame" x="0.0" y="0.0" width="384" height="50"/>
@@ -207,7 +207,6 @@
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="6pc-a5-14X"/>
                                                                         <constraint firstAttribute="bottom" secondItem="b2D-Yh-6GT" secondAttribute="bottom" constant="5" id="GxI-UF-jte"/>
                                                                         <constraint firstAttribute="height" constant="50" id="MC6-Bg-kYR"/>
                                                                         <constraint firstAttribute="trailing" secondItem="b2D-Yh-6GT" secondAttribute="trailing" constant="5" id="eEo-2H-nIa"/>
@@ -215,12 +214,39 @@
                                                                         <constraint firstItem="b2D-Yh-6GT" firstAttribute="leading" secondItem="VFY-Z6-bId" secondAttribute="leading" constant="5" id="ral-zA-SwU"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ef5-KY-aM7" userLabel="PlaylistContainer">
-                                                                    <rect key="frame" x="0.0" y="204" width="384" height="24"/>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t5I-TX-pB9" userLabel="PlaylistContainer">
+                                                                    <rect key="frame" x="0.0" y="204" width="384" height="44"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcg-l2-1Pw">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="44"/>
+                                                                            <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                                                            <state key="normal" title="   Add to Playlist">
+                                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <action selector="addToPlaylistPressed:" destination="iIe-TR-yMi" eventType="touchUpInside" id="uCt-r5-FjQ"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5td-hb-cRV">
+                                                                            <rect key="frame" x="339" y="9" width="30" height="26"/>
+                                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="29M-CK-Drj"/>
+                                                                                <constraint firstAttribute="height" constant="30" id="4JY-Vy-g3s"/>
+                                                                                <constraint firstAttribute="width" constant="30" id="NIW-Rd-Fan"/>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="hcV-Dj-UlY"/>
+                                                                            </constraints>
+                                                                        </imageView>
+                                                                    </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="NRE-uE-siz"/>
-                                                                        <constraint firstAttribute="height" constant="50" id="UhM-d9-DNd"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="tcg-l2-1Pw" secondAttribute="bottom" id="FOH-CW-hG2"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="tcg-l2-1Pw" secondAttribute="trailing" id="MqD-Tb-fey"/>
+                                                                        <constraint firstItem="tcg-l2-1Pw" firstAttribute="leading" secondItem="t5I-TX-pB9" secondAttribute="leading" id="bhQ-MT-T2f"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="5td-hb-cRV" secondAttribute="trailing" constant="15" id="eOL-v5-Lwr"/>
+                                                                        <constraint firstItem="5td-hb-cRV" firstAttribute="centerY" secondItem="t5I-TX-pB9" secondAttribute="centerY" id="feo-Zv-VS0"/>
+                                                                        <constraint firstItem="tcg-l2-1Pw" firstAttribute="top" secondItem="t5I-TX-pB9" secondAttribute="top" id="mOQ-JZ-VfO"/>
+                                                                        <constraint firstAttribute="height" constant="50" id="qpk-L6-y84"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
@@ -236,7 +262,7 @@
                                                     </constraints>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbJ-ew-8yI">
-                                                    <rect key="frame" x="0.0" y="258" width="414" height="50"/>
+                                                    <rect key="frame" x="0.0" y="278" width="414" height="50"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8o-fZ-FoR">
                                                             <rect key="frame" x="0.0" y="0.0" width="25" height="50"/>
@@ -313,7 +339,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ideaPrototype" rowHeight="57" id="2Wv-gu-Cg1">
-                                        <rect key="frame" x="0.0" y="336" width="414" height="57"/>
+                                        <rect key="frame" x="0.0" y="356" width="414" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2Wv-gu-Cg1" id="kl1-4h-8yy">
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="57"/>
@@ -339,6 +365,7 @@
                     <connections>
                         <outlet property="NewIdeaContainer" destination="72Z-qd-4vf" id="PHm-6d-2nO"/>
                         <outlet property="addCancelContainer" destination="gbJ-ew-8yI" id="Upm-jJ-lS5"/>
+                        <outlet property="addExplanationButton" destination="ii5-xY-0FT" id="w2a-D6-DIg"/>
                         <outlet property="addExplanationContainer" destination="QmE-qD-RE4" id="x4y-x7-0ob"/>
                         <outlet property="addNewIdeaContainer" destination="fej-RG-zCc" id="c2K-lm-ZoA"/>
                         <outlet property="explanationContainer" destination="VFY-Z6-bId" id="Bju-G9-wDV"/>
@@ -347,13 +374,67 @@
                         <outlet property="ideaContainer" destination="1kw-uG-EZg" id="d8G-qQ-Rl9"/>
                         <outlet property="ideaTextView" destination="43q-B7-sym" id="bjf-FY-6o1"/>
                         <outlet property="ideasTable" destination="IPf-Mc-A7R" id="tQq-vK-pB3"/>
-                        <outlet property="playlistContainer" destination="Ef5-KY-aM7" id="pp2-fM-v7V"/>
+                        <outlet property="playlistContainer" destination="t5I-TX-pB9" id="SoI-ky-q3l"/>
                         <segue destination="8lP-r5-UWT" kind="presentation" identifier="editIdeaSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="PUO-v5-QoL"/>
+                        <segue destination="Dei-wc-AqZ" kind="presentation" identifier="pickPlaylistSegue" modalPresentationStyle="overCurrentContext" id="GBl-d1-Pyq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bmf-45-flz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="986.95652173913049" y="93.75"/>
+        </scene>
+        <!--Playlist Picker View Controller-->
+        <scene sceneID="RkR-Mp-hAs">
+            <objects>
+                <viewController id="Dei-wc-AqZ" customClass="PlaylistPickerViewController" customModule="Home" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oKU-lF-cEf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AYu-8Q-GRp">
+                                <rect key="frame" x="50" y="144" width="314" height="518"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="playlistCellPrototype" rowHeight="49" id="ugK-37-csn">
+                                        <rect key="frame" x="0.0" y="28" width="314" height="49"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ugK-37-csn" id="Bkd-3r-nqY">
+                                            <rect key="frame" x="0.0" y="0.0" width="314" height="49"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pr4-zd-0hu">
+                                <rect key="frame" x="157" y="662" width="100" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="GrO-6E-7SL"/>
+                                    <constraint firstAttribute="width" constant="100" id="KRR-gZ-rYg"/>
+                                </constraints>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="Dei-wc-AqZ" eventType="touchUpInside" id="yA9-xH-Z6H"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Q71-zz-rIP"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Q71-zz-rIP" firstAttribute="bottom" secondItem="AYu-8Q-GRp" secondAttribute="bottom" constant="200" id="1Qq-35-Xg1"/>
+                            <constraint firstItem="AYu-8Q-GRp" firstAttribute="leading" secondItem="Q71-zz-rIP" secondAttribute="leading" constant="50" id="1x7-fJ-FI3"/>
+                            <constraint firstItem="Pr4-zd-0hu" firstAttribute="centerX" secondItem="oKU-lF-cEf" secondAttribute="centerX" id="8Ux-qI-38i"/>
+                            <constraint firstItem="Q71-zz-rIP" firstAttribute="bottom" secondItem="Pr4-zd-0hu" secondAttribute="bottom" constant="150" id="FUL-aN-K3R"/>
+                            <constraint firstItem="Q71-zz-rIP" firstAttribute="trailing" secondItem="AYu-8Q-GRp" secondAttribute="trailing" constant="50" id="Grn-Sv-4MO"/>
+                            <constraint firstItem="AYu-8Q-GRp" firstAttribute="top" secondItem="Q71-zz-rIP" secondAttribute="top" constant="100" id="w0b-D5-Qqq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="playlistPickerTable" destination="AYu-8Q-GRp" id="BxF-Sx-AZ3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sv9-lc-0cT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2134.7826086956525" y="444.64285714285711"/>
         </scene>
         <!--Edit Idea View Controller-->
         <scene sceneID="P2x-4a-5nY">
@@ -501,6 +582,7 @@
                         <outlet property="groupTextView" destination="1EI-ob-Rfx" id="rsG-nU-56c"/>
                         <outlet property="ideaTextView" destination="ThF-he-oL0" id="5QL-23-nMa"/>
                         <outlet property="stackView" destination="axl-Da-GP8" id="SDP-I4-yyp"/>
+                        <segue destination="Dei-wc-AqZ" kind="presentation" identifier="pickPlaylistSegue" modalPresentationStyle="overCurrentContext" id="lHF-4e-3yD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U2d-qo-P2D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -508,6 +590,9 @@
             <point key="canvasLocation" x="1003" y="869"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="GBl-d1-Pyq"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
